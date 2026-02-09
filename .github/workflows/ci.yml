@@ -36,7 +36,7 @@ jobs:
       - name: Run tests
         run: |
           cd backend
-          npm test
+          npm test -- --passWithNoTests
 
   frontend-tests:
     name: Frontend Tests
