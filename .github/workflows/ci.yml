@@ -72,8 +72,8 @@ jobs:
 
       - name: Build Docker images
         run: |
-          docker build -t awesome-devops-dashboard-backend:${{ github.sha }} -f backend/Dockerfile .
-          docker build -t awesome-devops-dashboard-frontend:${{ github.sha }} -f frontend/Dockerfile .
+          docker build -t awesome-devops-dashboard-backend:${{ github.sha }} -f backend/Dockerfile backend
+          docker build -t awesome-devops-dashboard-frontend:${{ github.sha }} -f frontend/Dockerfile frontend
 
       - name: Run security scan
         run: |
@@ -86,16 +86,3 @@ jobs:
           # Add your deployment commands here
           # docker push your-registry/awesome-devops-dashboard-backend:${{ github.sha }}
           # docker push your-registry/awesome-devops-dashboard-frontend:${{ github.sha }}
-
-      - name: Notify on failure
-        if: failure()
-        uses: actions/github-script@v7
-        with:
-          script: |
-            github.rest.issues.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              title: 'CI/CD Pipeline Failed',
-              body: 'The CI/CD pipeline has failed. Please check the logs.',
-              labels: ['ci', 'failure']
-            });
