@@ -1,4 +1,4 @@
-import { ExternalLink, Star, Forks, Code2, Activity, AlertCircle } from 'lucide-react';
+import { Star, GitFork, Code2, Activity } from 'lucide-react';
 
 export function RepoCard({ repo, onStatsClick, getTrendIcon }) {
   const username = repo.owner?.login || 'MohamedAbdelwahab24';
@@ -39,7 +39,7 @@ export function RepoCard({ repo, onStatsClick, getTrendIcon }) {
 
         <div className="text-center p-3 bg-gray-700/50 rounded-lg">
           <div className="flex items-center justify-center gap-1 text-gray-400 mb-1">
-            <Forks className="w-4 h-4" />
+            <GitFork className="w-4 h-4" />
           </div>
           <p className="text-xl font-semibold text-white">{repo.forks_count || 0}</p>
         </div>
@@ -64,6 +64,42 @@ export function RepoCard({ repo, onStatsClick, getTrendIcon }) {
       >
         View on GitHub →
       </a>
+    </div>
+  );
+}
+
+export function RepoStats({ stats, onClose }) {
+  if (!stats) return null;
+
+  const score = stats.healthScore ?? 0;
+
+  return (
+    <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-xl font-semibold text-white">Repository Statistics</h2>
+        <button
+          onClick={onClose}
+          className="px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded text-sm text-white"
+        >
+          Close
+        </button>
+      </div>
+
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <Stat label="Health Score" value={`${score}%`} />
+        <Stat label="Commits" value={stats.commits ?? 0} />
+        <Stat label="Open PRs" value={stats.openPRs ?? 0} />
+        <Stat label="Open Issues" value={stats.openIssues ?? 0} />
+      </div>
+    </div>
+  );
+}
+
+function Stat({ label, value }) {
+  return (
+    <div className="p-4 bg-gray-700/50 rounded-lg">
+      <p className="text-xs text-gray-400 mb-1">{label}</p>
+      <p className="text-xl font-semibold text-white">{value}</p>
     </div>
   );
 }

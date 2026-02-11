@@ -3,7 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import { RepoCard, RepoStats } from '../components/RepoCard';
 import { ActivityChart } from '../components/ActivityChart';
 import { RepoList } from '../components/RepoList';
-import { TrendUp, TrendDown, TrendNeutral } from 'lucide-react';
+import { TrendingUp, TrendingDown, Minus } from 'lucide-react';
 
 export default function Dashboard() {
   const { user } = useAuth();
@@ -52,9 +52,9 @@ export default function Dashboard() {
   };
 
   const getTrendIcon = (healthScore) => {
-    if (healthScore >= 70) return <TrendUp className="text-green-400" />;
-    if (healthScore >= 50) return <TrendNeutral className="text-yellow-400" />;
-    return <TrendDown className="text-red-400" />;
+    if (healthScore >= 70) return <TrendingUp className="text-green-400" />;
+    if (healthScore >= 50) return <Minus className="text-yellow-400" />;
+    return <TrendingDown className="text-red-400" />;
   };
 
   if (loading) {
